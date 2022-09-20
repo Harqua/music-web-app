@@ -51,8 +51,8 @@ function CreateSample({ addSample, currentId }) {
   const handleClick = (event) => {
     event.preventDefault();
     const timeDate = new Date();
-    const time = timeDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-    const date = timeDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+    const time = timeDate.toLocaleString('en-AU', { hour: 'numeric', minute: 'numeric', hour12: true });
+    const date = timeDate.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
     const nextId = currentId + 1;
     const newId = nextId.toString();
     const sample = { id: `${newId}`, title: "New Sample", created: `${time} on ${date}` };
