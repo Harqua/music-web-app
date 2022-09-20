@@ -33,7 +33,7 @@ function EditButtons({ title, sample }) {
     <>
       <form>
         <input type="text" name="sample-name" id="sampleTitle" defaultValue={title}></input>
-        <nav>
+        <nav className="sample-edit-button">
           <button onClick={handleClickPreview} className="content-button">Preview</button>
           <button onClick={handleClickSave} className="content-button2">Save</button>
         </nav>

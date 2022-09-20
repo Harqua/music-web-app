@@ -188,15 +188,16 @@ time {
 	padding-left: 2em;
 	padding-top: 1em;
 	padding-bottom: 1em;
-	padding-right: 2em;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-}
-
-.edit-title form {
 	flex: 1;
 	padding-right: 2em
+}
+	
+.sample-edit-button {
+	padding-left:2em;
+	display: flex;
 }
 
 #sampleTitle {
