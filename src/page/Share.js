@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams } from "react-router-dom";
+// import { useState } from "react";
 import { initialSample } from "../data/sample";
 import Template from "../components/Template";
 
