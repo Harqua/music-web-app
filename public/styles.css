@@ -212,6 +212,72 @@ time {
 	font-family: "Dynapuff";
 }
 
+#instrumentType {
+	display:flex;
+	margin-top: 2em;
+	align-items: center;
+	font-family: "Ubuntu";
+}
+
+.music-button{
+	color: var(--headerTextColor);
+	background-color: var(--bgColor);
+}
+
+.active{
+	color: var(--bgColor);
+	background-color: var(--headerTextColor);
+}
+
+.music-button:hover{
+	background-color: var(--fgColorLighter)
+}
+
+table {
+	border-collapse: collapse;
+	margin-left: 1em;
+	width:100%;
+	height: 2em;
+}
+
+th {
+	
+	border-color: var(--fgColor);
+	border-width: 2px;
+	border-style: solid;
+	border-bottom-width: 4px;
+}
+
+#noteContent {
+	font-family: "Ubuntu";
+}
+
+.sequencer {
+	border-color: var(--fgColor);
+	border-width: 2px;
+	border-style: solid;
+	border-bottom-width: 4px;
+}
+
+.sequencer > .bar {
+	border: 1px solid black;
+	width: 100%;
+	padding: 0.75em 0.25em;
+	text-align: center;
+	cursor: pointer;
+}
+
+.sequencer > .bar:hover {
+	background: #aaa;
+}
+
+.sequencer > .bar.selected {
+	background: #666;
+	color: white;
+	font-weight: bold;
+}
+
+
 /* Share */
 #shareTitle {
 

@@ -6,8 +6,20 @@ export const synth = new toneObject.PolySynth().toDestination();
 
 export const toneTransport = toneObject.Transport;
 
-export const tonePart = new toneObject.Part((time, note) => {
+export const guitarTonePart = new toneObject.Part((time, note) => {
     guitar.triggerAttackRelease(note, "8n", time);
+}, []).start(0);
+
+export const frenchHornTonePart = new toneObject.Part((time, note) => {
+    frenchHorn.triggerAttackRelease(note, "8n", time);
+}, []).start(0);
+
+export const pianoTonePart = new toneObject.Part((time, note) => {
+    piano.triggerAttackRelease(note, "8n", time);
+}, []).start(0);
+
+export const drumTonePart = new toneObject.Part((time, note) => {
+    drum.triggerAttackRelease(note, "8n", time);
 }, []).start(0);
 
 export const guitar = new toneObject.Sampler({
@@ -140,4 +152,18 @@ export const piano = new toneObject.Sampler({
     },
     release: 1,
     baseUrl: "samples/piano/"
+}).toDestination();
+
+export const drum = new toneObject.Sampler({
+    urls: {
+        "B3": "drums1.mp3",
+        "A3": "drums2.mp3",
+        "G3": "drums3.mp3",
+        "F3": "drums4.mp3",
+        "E3": "drums5.mp3",
+        "D3": "drums6.mp3",
+        "C3": "drums7.mp3",
+    },
+    release: 1,
+    baseUrl: "samples/drum-samples/"
 }).toDestination();
