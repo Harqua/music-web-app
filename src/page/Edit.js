@@ -27,11 +27,9 @@ export default function Edit() {
     toneTransport.stop()
     if (previewing) {
       setPreviewing(false);
-      console.log("Preview stopped manually.");
     }
     else {
       setPreviewing(true);
-      console.log("Preview started.");
       toneTransport.start();
     }
   }
@@ -81,7 +79,7 @@ function InstrumentType({ instrument, setInstrument, handleClickInstrument }) {
         <tbody>
           <tr>
             <th className={`music-button ${instrument === "piano" && `active`}`} onClick={() => handleClickInstrument("piano")}>Piano</th>
-            <th className={`music-button ${instrument === "french-horn" && `active`}`} onClick={() => handleClickInstrument("french-horn")}>French Horn</th>
+            <th className={`music-button ${instrument === "french_horn" && `active`}`} onClick={() => handleClickInstrument("french_horn")}>French Horn</th>
             <th className={`music-button ${instrument === "guitar" && `active`}`} onClick={() => handleClickInstrument("guitar")}>Guitar</th>
             <th className={`music-button ${instrument === "drums" && `active`}`} onClick={() => handleClickInstrument("drums")}>Drums</th>
           </tr>
@@ -184,14 +182,27 @@ function Sequencer({ note, sampleNotes, setSampleNotes, previewing, setPreviewin
     toneTransport.cancel();
     
     const sequenceFilter = sequence.filter(bar => findNotes[note][bar.barID-1])
+    
     sequenceFilter.forEach(bar => {
-      toneParts.forEach(tonePart => {
-        tonePart.add((bar.barID - 1) / 4, `${note}3`)}); 
+      // toneParts.forEach(tonePart => {
+      //   tonePart.add((bar.barID - 1) / 4, `${note}3`)}); 
+      console.log(bar.barID-1)
+      if (instrument==="piano"){
+        pianoTonePart.add((bar.barID - 1) / 4, `${note}3`);
+      }
+      else if (instrument==="french_horn"){
+        frenchHornTonePart.add((bar.barID - 1) / 4, `${note}3`);
+      }
+      else if (instrument==="guitar"){
+        guitarTonePart.add((bar.barID - 1) / 4, `${note}3`);
+      }
+      else if (instrument==="drums"){
+        drumTonePart.add((bar.barID - 1) / 4, `${note}3`);
+      }
     });
 
     toneTransport.schedule(time => {
       setPreviewing(false);
-      console.log("Preview stopped automatically.");
     }, 16 / 4);
 
   });

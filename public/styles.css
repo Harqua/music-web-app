@@ -257,6 +257,7 @@ th {
 
 .each-note b{
 	width: 1em;
+	margin-bottom: 1em;
 }
 .each-note {
 	display:flex;

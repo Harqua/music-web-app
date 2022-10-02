@@ -55,7 +55,15 @@ function CreateSample({ addSample, currentId }) {
     const date = timeDate.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
     const nextId = currentId + 1;
     const newId = nextId.toString();
-    const sample = { id: `${newId}`, title: "New Sample", created: `${time} on ${date}` };
+    const sample = { id: `${newId}`, title: "New Sample", created: `${time} on ${date}`, type: "piano", notes:[
+      { "B": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
+      { "A": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
+      { "G": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
+      { "F": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
+      { "E": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
+      { "D": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
+      { "C": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] }
+    ] };
     addSample(sample);
 
   };

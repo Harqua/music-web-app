@@ -36,5 +36,9 @@ export const initialSample = [
 
 /*
 Share: UQ sports, UQU Sports, Near UQ Lakes station, General Purpose South, Great Court
-Edit:  Notes
+"Great Court, UQ"
+"General Purpose South, UQ"
+"Near UQ Lakes Bus Station, UQ"
+"UQU Shops, UQ"
+"UQ Sport Courts, UQ"
 */
