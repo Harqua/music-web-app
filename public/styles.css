@@ -234,7 +234,7 @@ time {
 	cursor:pointer;
 }
 
-table {
+#musicTable {
 	border-collapse: collapse;
 	margin-left: 1em;
 	width:100%;
@@ -307,6 +307,46 @@ th {
 	justify-content: space-between;
 	align-items: center;
 }
+
+
+#locationList{
+	margin-bottom: 16vh;
+	padding-left: 2em;
+	padding-right:2em;
+}
+.each-location{
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+}
+
+.each-location section{
+	font-size: 1.2em;
+}
+.each-location nav{
+	width:50%;
+}
+
+.share-button{
+	color: var(--headerTextColor);
+	background-color: var(--bgColor);
+	font-weight: normal;
+}
+
+.share-button:hover{
+	background-color: var(--fgColorLighter);
+	cursor:pointer;
+}
+
+#shareTable{
+	border-collapse: collapse;
+	margin-left: 1em;
+	width:100%;
+	height: 2em;
+}
+
 
 /* Footer */
 .page-footer {

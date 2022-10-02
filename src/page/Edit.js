@@ -25,6 +25,7 @@ export default function Edit() {
   const handleClickPreview = (event) => {
     toneObject.start()
     toneTransport.stop()
+    toneTransport.cancel();
     if (previewing) {
       setPreviewing(false);
     }
@@ -58,7 +59,7 @@ export default function Edit() {
           <form onSubmit={handleClickSave}>
             <input type="text" name="title" id="sampleTitle" defaultValue={editSample.title} onChange={saveOnChange}></input>
             <nav className="sample-edit-button">
-              <button onClick={handleClickPreview} className="content-button">{previewing ? "Stop Previewing" : "Preview"}</button>
+              <Preview handleClickPreview={handleClickPreview} previewing={previewing}/>
               <button type="submit" className="content-button2">Save</button>
             </nav>
           </form>
@@ -70,12 +71,16 @@ export default function Edit() {
   );
 }
 
+export function Preview({handleClickPreview, previewing}){
+  return <button onClick={handleClickPreview} className="content-button">{previewing ? "Stop Previewing" : "Preview"}</button>
+
+}
 
 function InstrumentType({ instrument, setInstrument, handleClickInstrument }) {
   return (
     <div id="instrumentType">
       <b>Type</b>
-      <table>
+      <table id="musicTable">
         <tbody>
           <tr>
             <th className={`music-button ${instrument === "piano" && `active`}`} onClick={() => handleClickInstrument("piano")}>Piano</th>
@@ -178,15 +183,15 @@ function Sequencer({ note, sampleNotes, setSampleNotes, previewing, setPreviewin
   }
   useEffect(() => {
 
-    toneParts.forEach(tonePart => tonePart.clear());
-    toneTransport.cancel();
+    // toneParts.forEach(tonePart => tonePart.clear());
+    // toneTransport.cancel();
     
     const sequenceFilter = sequence.filter(bar => findNotes[note][bar.barID-1])
     
     sequenceFilter.forEach(bar => {
       // toneParts.forEach(tonePart => {
       //   tonePart.add((bar.barID - 1) / 4, `${note}3`)}); 
-      console.log(bar.barID-1)
+
       if (instrument==="piano"){
         pianoTonePart.add((bar.barID - 1) / 4, `${note}3`);
       }

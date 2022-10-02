@@ -5,7 +5,7 @@ import Template from "../components/Template";
 
 
 
-function Sample({ id, title, created }) {
+function Sample({ id, title, created, type, notes }) {
 
   return (
     <div className="page-content">
