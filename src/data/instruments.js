@@ -24,10 +24,6 @@ export const drumTonePart = new toneObject.Part((time, note) => {
 
 export const guitar = new toneObject.Sampler({
 
-    onload: () => {
-        console.log("something")
-    }
-    ,
     urls: {
         "F3": "F3.mp3",
         "F#1": "Fs1.mp3",
@@ -72,9 +68,7 @@ export const guitar = new toneObject.Sampler({
 }).toDestination();
 
 export const frenchHorn = new toneObject.Sampler({
-    onload: () => {
-        console.log("something")
-    },
+
     urls: {
         "F3": "F3.mp3",
         "F#1": "Fs1.mp3",
@@ -119,9 +113,7 @@ export const frenchHorn = new toneObject.Sampler({
 }).toDestination();
 
 export const piano = new toneObject.Sampler({
-    onload: () => {
-        console.log("something")
-    },
+
     urls: {
         "F3": "F3.mp3",
         "F#1": "Fs1.mp3",
@@ -166,9 +158,7 @@ export const piano = new toneObject.Sampler({
 }).toDestination();
 
 export const drum = new toneObject.Sampler({
-    onload: () => {
-        console.log("something")
-    },
+
     urls: {
         "B3": "drums1.mp3",
         "A3": "drums2.mp3",

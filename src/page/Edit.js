@@ -13,7 +13,7 @@ export default function Edit() {
   let [sample] = initialSample.filter((sample) => sample.id === id);
 
 
-  const [editSample, setEditSample] = useState({ id: `${sample.id}`, title: `${sample.title}`, created: `${sample.created}`, type: `${sample.type}`, notes: sample.notes })
+  const [editSample, setEditSample] = useState({ id: `${sample.id}`, title: `${sample.title}`, created: `${sample.created}`, type: `${sample.type}`, recording_data: sample.notes })
   const timeDate = new Date();
   const time = timeDate.toLocaleString('en-AU', { hour: 'numeric', minute: 'numeric', hour12: true });
   const date = timeDate.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -39,12 +39,12 @@ export default function Edit() {
   const [instrument, setInstrument] = useState(sample.type)
   const handleClickInstrument = (x) => { setInstrument(x) }
 
-  const [sampleNotes, setSampleNotes] = useState(sample.notes)
+  const [sampleNotes, setSampleNotes] = useState(sample.recording_data)
 
   const handleClickSave = (event) => {
     event.preventDefault();
 
-    initialSample[editSample.id - 1] = { ...editSample, created: `${dateTime}`, type: instrument, note: sampleNotes }
+    initialSample[editSample.id - 1] = { ...editSample, created: `${dateTime}`, type: instrument, recording_data: sampleNotes }
 
   }
   const saveOnChange = (event) => {
