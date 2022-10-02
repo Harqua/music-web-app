@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { initialSample } from "../data/sample";
 import Template from "../components/Template";
 import { guitar, piano, frenchHorn, drum } from "../data/instruments.js";
 import { toneObject, toneTransport, guitarTonePart, pianoTonePart, frenchHornTonePart, drumTonePart } from "../data/instruments.js";
@@ -9,18 +8,55 @@ import { toneObject, toneTransport, guitarTonePart, pianoTonePart, frenchHornTon
 let toneParts = [guitarTonePart, pianoTonePart, frenchHornTonePart, drumTonePart];
 
 export default function Edit() {
+
+  const initialSample = []
   let { id } = useParams();
-  let [sample] = initialSample.filter((sample) => sample.id === id);
+  const [samples, setSamples] = useState(initialSample);
+
+  // let [sample] = samples.filter((sample) => sample.id === id);
+  const [editSample, setEditSample] = useState()
+
+  const initialPreviewing = false;
+  const [previewing, setPreviewing] = useState(initialPreviewing);
+  const [instrument, setInstrument] = useState()
+  const [sampleNotes, setSampleNotes] = useState()
+  
+  const x = async () => {
+    const readInitialSampleResponse = await fetch("http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=read&endpoint=samples", {
+      method: "GET",
+    })
+    
+    const readSample = await readInitialSampleResponse.json()
+    const allSample = [...readSample.samples]
+    setSamples(allSample)
+    let [sample] = allSample.filter((sample) => sample.id === id);
+    setEditSample({ id: `${sample.id}`, name: `${sample.name}`, datetime: `${sample.datetime}`, type: `${sample.type}`, recording_data: sample.recording_data })
+    setInstrument(sample.type)
+    setSampleNotes(sample.recording_data)
+  
+  }
 
 
-  const [editSample, setEditSample] = useState({ id: `${sample.id}`, title: `${sample.title}`, created: `${sample.created}`, type: `${sample.type}`, recording_data: sample.notes })
+  useEffect(() => {
+
+    x()
+  }, [])
+
+  if (!editSample){
+    return <p>Loading</p>
+  }
+
+  if (!sampleNotes){
+    return <p>Loading</p>
+  }
+ 
   const timeDate = new Date();
   const time = timeDate.toLocaleString('en-AU', { hour: 'numeric', minute: 'numeric', hour12: true });
   const date = timeDate.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
   const dateTime = `${time} on ${date}`
 
-  const initialPreviewing = false;
-  const [previewing, setPreviewing] = useState(initialPreviewing);
+
+  
 
   const handleClickPreview = (event) => {
     toneObject.start()
@@ -36,20 +72,24 @@ export default function Edit() {
   }
 
 
-  const [instrument, setInstrument] = useState(sample.type)
+  
   const handleClickInstrument = (x) => { setInstrument(x) }
 
-  const [sampleNotes, setSampleNotes] = useState(sample.recording_data)
+  
 
-  const handleClickSave = (event) => {
+  const handleClickSave = async (event) => {
     event.preventDefault();
 
-    initialSample[editSample.id - 1] = { ...editSample, created: `${dateTime}`, type: instrument, recording_data: sampleNotes }
+    // initialSample[editSample.id - 1] = { ...editSample, datetime: `${dateTime}`, type: instrument, recording_data: sampleNotes }
+    const createSampleResponse = await fetch(`http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=update&endpoint=samples&sampleType=${instrument}&sampleName=${editSample.name}&id=${editSample.id}`, {
+      method: "POST",
+      body: JSON.stringify(sampleNotes),
+    });
 
   }
   const saveOnChange = (event) => {
     event.preventDefault();
-    setEditSample({ ...editSample, title: event.target.value, created: `${dateTime}`, type: instrument })
+    setEditSample({ ...editSample, name: event.target.value, datetime: `${dateTime}`, type: instrument })
   }
 
   return (
@@ -57,7 +97,7 @@ export default function Edit() {
       <div className="page-content">
         <section className="edit-title">
           <form onSubmit={handleClickSave}>
-            <input type="text" name="title" id="sampleTitle" defaultValue={editSample.title} onChange={saveOnChange}></input>
+            <input type="text" name="title" id="sampleTitle" defaultValue={editSample.name} onChange={saveOnChange}></input>
             <nav className="sample-edit-button">
               <Preview handleClickPreview={handleClickPreview} previewing={previewing}/>
               <button type="submit" className="content-button2">Save</button>
@@ -150,6 +190,10 @@ function Bars({ sequence, setSequence, note, instrument }) {
     setSequence([...sequence].map((b) => {
       return b.barID === bar.barID ? bar : b;
     }))
+    console.log(sequence)
+    // console.log([...sequence].map((b) => {
+    //   return b.barID === bar.barID ? bar : b;
+    // }))
   }
 
   return sequence.sort(sortSequence).map(bar => <Bar note={note} key={bar.barID} barID={bar.barID} barEnabled={bar.barEnabled} handleBarClick={() => handleBarClick(bar,instrument)} />);
@@ -158,18 +202,21 @@ function Bars({ sequence, setSequence, note, instrument }) {
 function Sequencer({ note, sampleNotes, setSampleNotes, previewing, setPreviewing, instrument }) {
 
 
-  const findNotesIndex = sampleNotes.findIndex(sampleNote => {
+  const parseSampleNotes = (typeof sampleNotes === 'string') ? JSON.parse(sampleNotes) : sampleNotes
+  const findNotesIndex = parseSampleNotes.findIndex(sampleNote => {
     const include = Object.keys(sampleNote)
     return include.includes(note)
   })
-  const findNotes = sampleNotes[findNotesIndex]
 
+  const findNotes = parseSampleNotes[findNotesIndex]
   const notesArray = findNotes[note]
+
+  
   let initialSequence = [];
   for (let bar = 1; bar <= 16; bar++) {
     initialSequence.push({
       barID: bar,
-      barEnabled: notesArray[bar - 1],
+      barEnabled: notesArray[bar-1],
     });
   }
 
@@ -179,7 +226,7 @@ function Sequencer({ note, sampleNotes, setSampleNotes, previewing, setPreviewin
   const setSequence = (newSeq) => {
     _setSequence(newSeq)
     findNotes[note] = newSeq.map((x) => x.barEnabled)
-    setSampleNotes([...sampleNotes])
+    setSampleNotes([...parseSampleNotes])
   }
   useEffect(() => {
 

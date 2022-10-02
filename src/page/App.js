@@ -8,7 +8,7 @@ import Template from "../components/Template";
 function Sample({ id, name, datetime}) {
 
   const timeFormat = new Date(datetime)
-  const newtime = timeFormat.toLocaleString('en-AU', { hour: 'numeric', minute: 'numeric', hour12: true });
+  const newtime = timeFormat.toLocaleString('en-AU',{ hour: 'numeric', minute: 'numeric', hour12: true });
   const newdate = timeFormat.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
   const newTimeFormat = `${newtime} on ${newdate}`
   return (
