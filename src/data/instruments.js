@@ -23,6 +23,11 @@ export const drumTonePart = new toneObject.Part((time, note) => {
 }, []).start(0);
 
 export const guitar = new toneObject.Sampler({
+
+    onload: () => {
+        console.log("something")
+    }
+    ,
     urls: {
         "F3": "F3.mp3",
         "F#1": "Fs1.mp3",
@@ -67,6 +72,9 @@ export const guitar = new toneObject.Sampler({
 }).toDestination();
 
 export const frenchHorn = new toneObject.Sampler({
+    onload: () => {
+        console.log("something")
+    },
     urls: {
         "F3": "F3.mp3",
         "F#1": "Fs1.mp3",
@@ -74,7 +82,7 @@ export const frenchHorn = new toneObject.Sampler({
         "F#3": "Fs3.mp3",
         "G1": "G1.mp3",
         "G2": "G2.mp3",
-        "G3": "G3.mp3",
+        "G3": "G2.mp3",
         "G#1": "Gs1.mp3",
         "G#2": "Gs2.mp3",
         "G#3": "Gs3.mp3",
@@ -86,9 +94,9 @@ export const frenchHorn = new toneObject.Sampler({
         "A#3": "As3.mp3",
         "B1": "B1.mp3",
         "B2": "B2.mp3",
-        "B3": "B3.mp3",
+        "B3": "A1.mp3",
         "C2": "C2.mp3",
-        "C3": "C3.mp3",
+        "C3": "C4.mp3",
         "C4": "C4.mp3",
         "C#2": "Cs2.mp3",
         "C#3": "Cs3.mp3",
@@ -102,7 +110,7 @@ export const frenchHorn = new toneObject.Sampler({
         "D#3": "Ds3.mp3",
         "E1": "E1.mp3",
         "E2": "E2.mp3",
-        "E3": "E3.mp3",
+        "E3": "F3.mp3",
         "F1": "F1.mp3",
         "F2": "F2.mp3",
     },
@@ -111,6 +119,9 @@ export const frenchHorn = new toneObject.Sampler({
 }).toDestination();
 
 export const piano = new toneObject.Sampler({
+    onload: () => {
+        console.log("something")
+    },
     urls: {
         "F3": "F3.mp3",
         "F#1": "Fs1.mp3",
@@ -155,6 +166,9 @@ export const piano = new toneObject.Sampler({
 }).toDestination();
 
 export const drum = new toneObject.Sampler({
+    onload: () => {
+        console.log("something")
+    },
     urls: {
         "B3": "drums1.mp3",
         "A3": "drums2.mp3",
@@ -167,3 +181,7 @@ export const drum = new toneObject.Sampler({
     release: 1,
     baseUrl: "samples/drum-samples/"
 }).toDestination();
+
+// toneObject.start().then(() => {
+// 	console.log("wahoo");
+// })

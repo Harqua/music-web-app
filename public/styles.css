@@ -230,7 +230,8 @@ time {
 }
 
 .music-button:hover{
-	background-color: var(--fgColorLighter)
+	background-color: var(--fgColorLighter);
+	cursor:pointer;
 }
 
 table {
@@ -241,7 +242,7 @@ table {
 }
 
 th {
-	
+	width:25%;
 	border-color: var(--fgColor);
 	border-width: 2px;
 	border-style: solid;
@@ -250,31 +251,43 @@ th {
 
 #noteContent {
 	font-family: "Ubuntu";
+	margin-top: 2em;
+	
+}
+
+.each-note b{
+	width: 1em;
+}
+.each-note {
+	display:flex;
+	gap: 2em;
 }
 
 .sequencer {
+	
+	height: 2em;
 	border-color: var(--fgColor);
 	border-width: 2px;
 	border-style: solid;
 	border-bottom-width: 4px;
+	display: flex;
+	flex: 1;
+	margin-bottom: 1em
 }
 
 .sequencer > .bar {
-	border: 1px solid black;
+	border: 1px solid var(--fgColor);
 	width: 100%;
-	padding: 0.75em 0.25em;
 	text-align: center;
 	cursor: pointer;
 }
 
 .sequencer > .bar:hover {
-	background: #aaa;
+	background: var(--fgColorLighter);
 }
 
 .sequencer > .bar.selected {
-	background: #666;
-	color: white;
-	font-weight: bold;
+	background: var(--headerTextColor);
 }
 
 
