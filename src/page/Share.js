@@ -49,8 +49,35 @@ export default function Share() {
     init()
   }, [])
 
+
+
+  if (!location) {
+    return <p>Please Wait...</p>
+  }
+
+  const sampleName = (!sampleData) ? "Loading" : sampleData.name
+  const sampleDatetime = (!sampleData) ? "" : sampleData.datetime
+
+  const timeFormat = new Date(sampleDatetime)
+  const newtime = timeFormat.toLocaleString('en-AU', { hour: 'numeric', minute: 'numeric', hour12: true });
+  const newdate = timeFormat.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
+  const newTimeFormat = `${newtime} on ${newdate}`
+  return (
+    <Template title="Share This Sample:">
+      <div className="page-content" id="shareTitle">
+        <ShareTitle sampleNotes={sampleNotes} previewing={previewing} setPreviewing={setPreviewing} sampleName={sampleName} newTimeFormat={newTimeFormat} instrument={instrument}/>
+      </div>
+      <div id="locationList">
+        <Location location={location} sampleData={sampleData} />
+      </div>
+    </Template>
+  );
+}
+
+function ShareTitle({sampleNotes, previewing, setPreviewing, sampleName, newTimeFormat, instrument}) {
+
   async function Notes(note) {
-    
+
 
     const parseSampleNotes = (typeof sampleNotes === 'string') ? JSON.parse(sampleNotes) : sampleNotes
 
@@ -63,7 +90,7 @@ export default function Share() {
     const findNotes = parseSampleNotes[findNotesIndex]
     const notesArray = findNotes[note]
 
-    
+
 
     let initialSequence = [];
     for (let bar = 1; bar <= 16; bar++) {
@@ -73,39 +100,39 @@ export default function Share() {
       });
     }
 
-    // const [sequence, _setSequence] = useState(initialSequence);
-    // const setSequence = (newSeq) => {
-    //   _setSequence(newSeq)
-    //   findNotes[note] = newSeq.map((x) => x.barEnabled)
-    // }
+    const [sequence, _setSequence] = useState(initialSequence);
+    const setSequence = (newSeq) => {
+      _setSequence(newSeq)
+      findNotes[note] = newSeq.map((x) => x.barEnabled)
+    }
 
-    // useEffect(() => {
-
-
-    //   const sequenceFilter = sequence.filter(bar => findNotes[note][bar.barID - 1])
-
-    //   sequenceFilter.forEach(bar => {
+    useEffect(() => {
 
 
-    //     if (instrument === "piano") {
-    //       pianoTonePart.add((bar.barID - 1) / 4, `${note}3`);
-    //     }
-    //     else if (instrument === "french_horn") {
-    //       frenchHornTonePart.add((bar.barID - 1) / 4, `${note}3`);
-    //     }
-    //     else if (instrument === "guitar") {
-    //       guitarTonePart.add((bar.barID - 1) / 4, `${note}3`);
-    //     }
-    //     else if (instrument === "drums") {
-    //       drumTonePart.add((bar.barID - 1) / 4, `${note}3`);
-    //     }
-    //   });
+      const sequenceFilter = sequence.filter(bar => findNotes[note][bar.barID - 1])
 
-    //   toneTransport.schedule(time => {
-    //     setPreviewing(false);
-    //   }, 16 / 4);
+      sequenceFilter.forEach(bar => {
 
-    // });
+
+        if (instrument === "piano") {
+          pianoTonePart.add((bar.barID - 1) / 4, `${note}3`);
+        }
+        else if (instrument === "french_horn") {
+          frenchHornTonePart.add((bar.barID - 1) / 4, `${note}3`);
+        }
+        else if (instrument === "guitar") {
+          guitarTonePart.add((bar.barID - 1) / 4, `${note}3`);
+        }
+        else if (instrument === "drums") {
+          drumTonePart.add((bar.barID - 1) / 4, `${note}3`);
+        }
+      });
+
+      toneTransport.schedule(time => {
+        setPreviewing(false);
+      }, 16 / 4);
+
+    });
   }
 
   const handleClickPreview = (event) => {
@@ -125,38 +152,20 @@ export default function Share() {
   let eachNote = notes.map((note) => {
     Notes(note)
   })
- 
-
-
-  if (!location) {
-    return <p>Please Wait...</p>
-  }
-
-  const sampleName = (!sampleData) ? "Loading" : sampleData.name
-  const sampleDatetime = (!sampleData) ? "" : sampleData.datetime
-
-  const timeFormat = new Date(sampleDatetime)
-  const newtime = timeFormat.toLocaleString('en-AU', { hour: 'numeric', minute: 'numeric', hour12: true });
-  const newdate = timeFormat.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
-  const newTimeFormat = `${newtime} on ${newdate}`
   return (
-    <Template title="Share This Sample:">
-      <div className="page-content" id="shareTitle">
-        <section className="share-title">
-          <h3>{sampleName}</h3>
-          <time>{newTimeFormat}</time>
-        </section>
-        <nav>
-          {/* <button className="content-button">Preview</button> */}
-          <Preview handleClickPreview={handleClickPreview} previewing={previewing} />
-        </nav>
-      </div>
-      <div id="locationList">
-        <Location location={location} sampleData={sampleData} />
-      </div>
-    </Template>
-  );
+    <>
+      <section className="share-title">
+        <h3>{sampleName}</h3>
+        <time>{newTimeFormat}</time>
+      </section>
+      <nav>
+        {/* <button className="content-button">Preview</button> */}
+        <Preview handleClickPreview={handleClickPreview} previewing={previewing} />
+      </nav>
+    </>
+  )
 }
+
 
 function Location({ location, sampleData }) {
   return (
@@ -223,7 +232,7 @@ function ShareStatus({ location, sampleData }) {
     const sampleToLocation = await readSampleToLocation.json()
     const sampleLocation = sampleToLocation.samples_to_locations
     const filteredSampleLocation = sampleLocation.filter((x) => x.locations_id === location.id && x.samples_id === sampleData.id)
-    
+
     if (filteredSampleLocation.length !== 0) {
       const deleteShare = await fetch(`http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=delete&endpoint=samples_to_locations&id=${filteredSampleLocation[0].id}`, {
         method: "GET",

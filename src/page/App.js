@@ -157,7 +157,7 @@ export default function App() {
 
   const initialSample = []
   const [samples, setSamples] = useState(initialSample);
-  const x = async () => {
+  const init = async () => {
     const readInitialSampleResponse = await fetch("http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=read&endpoint=samples", {
       method: "GET",
     })
@@ -195,7 +195,7 @@ export default function App() {
 
   useEffect(() => {
 
-    x()
+    init()
   }, [])
 
   return (
