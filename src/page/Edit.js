@@ -111,7 +111,7 @@ export default function Edit() {
   );
 }
 
-export function Preview({handleClickPreview, previewing}){
+function Preview({handleClickPreview, previewing}){
   return <button onClick={handleClickPreview} className="content-button">{previewing ? "Stop Previewing" : "Preview"}</button>
 
 }
@@ -190,9 +190,6 @@ function Bars({ sequence, setSequence, note, instrument }) {
     setSequence([...sequence].map((b) => {
       return b.barID === bar.barID ? bar : b;
     }))
-    // console.log([...sequence].map((b) => {
-    //   return b.barID === bar.barID ? bar : b;
-    // }))
   }
 
   return sequence.sort(sortSequence).map(bar => <Bar note={note} key={bar.barID} barID={bar.barID} barEnabled={bar.barEnabled} handleBarClick={() => handleBarClick(bar,instrument)} />);
@@ -229,14 +226,9 @@ function Sequencer({ note, sampleNotes, setSampleNotes, previewing, setPreviewin
   }
   useEffect(() => {
 
-    // toneParts.forEach(tonePart => tonePart.clear());
-    // toneTransport.cancel();
-    
     const sequenceFilter = sequence.filter(bar => findNotes[note][bar.barID-1])
     
     sequenceFilter.forEach(bar => {
-      // toneParts.forEach(tonePart => {
-      //   tonePart.add((bar.barID - 1) / 4, `${note}3`)}); 
 
       if (instrument==="piano"){
         pianoTonePart.add((bar.barID - 1) / 4, `${note}3`);
