@@ -18,8 +18,8 @@
 }
 
 
-html{
-	height:100%;
+html {
+	height: 100%;
 
 }
 
@@ -33,9 +33,10 @@ body {
 
 }
 
-#root{
-	height:100%
+#root {
+	height: 100%
 }
+
 .page-header,
 main {
 	padding-left: 2vw;
@@ -97,7 +98,7 @@ svg {
 main {
 	font-family: "Dynapuff";
 	padding-top: 2em;
-	height:100%;
+	height: 100%;
 
 }
 
@@ -160,6 +161,12 @@ main li {
 	color: var(--headerTextColor);
 }
 
+.content-button3 {
+	background-color: var(--bgColor);
+	border-color: var(--fgColorLighter);
+	color: var(--fgColorLighter);
+}
+
 time {
 	font-size: 0.8em;
 	color: var(--fgColorLighter)
@@ -193,11 +200,11 @@ time {
 	align-items: center;
 	justify-content: space-between;
 	flex: 1;
-	
+
 }
-	
+
 .sample-edit-button {
-	padding-left:2em;
+	padding-left: 2em;
 	display: flex;
 }
 
@@ -214,37 +221,37 @@ time {
 }
 
 #instrumentType {
-	display:flex;
+	display: flex;
 	margin-top: 2em;
 	align-items: center;
 	font-family: "Ubuntu";
 }
 
-.music-button{
+.music-button {
 	color: var(--headerTextColor);
 	background-color: var(--bgColor);
 }
 
-.active{
+.active {
 	color: var(--bgColor);
 	background-color: var(--headerTextColor);
 	pointer-events: none;
 }
 
-.music-button:hover{
+.music-button:hover {
 	background-color: var(--fgColorLighter);
-	cursor:pointer;
+	cursor: pointer;
 }
 
 #musicTable {
 	border-collapse: collapse;
 	margin-left: 1em;
-	width:100%;
+	width: 100%;
 	height: 2em;
 }
 
 th {
-	width:25%;
+	width: 25%;
 	border-color: var(--fgColor);
 	border-width: 2px;
 	border-style: solid;
@@ -255,20 +262,21 @@ th {
 	font-family: "Ubuntu";
 	margin-top: 2em;
 	margin-bottom: 75vh;
-	
+
 }
 
-.each-note b{
+.each-note b {
 	width: 1em;
 	margin-bottom: 1em;
 }
+
 .each-note {
-	display:flex;
+	display: flex;
 	gap: 2em;
 }
 
 .sequencer {
-	
+
 	height: 2em;
 	border-color: var(--fgColor);
 	border-width: 2px;
@@ -279,18 +287,18 @@ th {
 	margin-bottom: 1em
 }
 
-.sequencer > .bar {
+.sequencer>.bar {
 	border: 1px solid var(--fgColor);
 	width: 100%;
 	text-align: center;
 	cursor: pointer;
 }
 
-.sequencer > .bar:hover {
+.sequencer>.bar:hover {
 	background: var(--fgColorLighter);
 }
 
-.sequencer > .bar.selected {
+.sequencer>.bar.selected {
 	background: var(--headerTextColor);
 }
 
@@ -312,42 +320,44 @@ th {
 }
 
 
-#locationList{
+#locationList {
 	margin-bottom: 75vh;
 	padding-left: 2em;
-	padding-right:2em;
+	padding-right: 2em;
 }
-.each-location{
-	display:flex;
+
+.each-location {
+	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	margin-top: 1.5em;
 	margin-bottom: 1.5em;
 }
 
-.each-location section{
+.each-location section {
 	font-size: 1.2em;
 }
-.each-location nav{
-	width:50%;
+
+.each-location nav {
+	width: 50%;
 }
 
-.share-button{
+.share-button {
 	/* color: var(--headerTextColor);
 	background-color: var(--bgColor); */
 	font-weight: normal;
 }
 
-.share-button:hover{
+.share-button:hover {
 	background-color: var(--fgColorLighter);
-	cursor:pointer;
+	cursor: pointer;
 }
 
 
-#shareTable{
+#shareTable {
 	border-collapse: collapse;
 	margin-left: 1em;
-	width:100%;
+	width: 100%;
 	height: 2em;
 	width: 40vw;
 }
@@ -355,48 +365,52 @@ th {
 
 /* Footer */
 .page-footer {
-	
+
 	background-color: var(--purpleColorLighter);
 	height: 7px;
 }
 
 
-@media only screen and (max-width: 500px){
-	.page-header h1{
+@media only screen and (max-width: 500px) {
+	.page-header h1 {
 		width: 40vw;
 	}
 
 
-	main li{
+	main li {
 		flex-direction: column;
 		align-items: flex-start;
-		
-	};
-	main li section{
+
+	}
+
+	;
+
+	main li section {
 		align-self: flex-start;
 	}
-	main li nav{
+
+	main li nav {
 		align-self: flex-end;
 	}
 
-	.edit-title form{
+	.edit-title form {
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 1em;
-		
+
 	}
 
-	.sample-edit-button{
+	.sample-edit-button {
 		align-self: flex-end;
 	}
 
-	#shareTitle{
-		flex-direction:column;
+	#shareTitle {
+		flex-direction: column;
 		align-items: flex-start;
 		gap: 1em;
 	}
 
-	#shareTitle nav{
+	#shareTitle nav {
 		align-self: flex-end;
 	}
 }

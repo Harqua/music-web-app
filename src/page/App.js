@@ -7,6 +7,42 @@ import Template from "../components/Template";
 
 function Sample({ id, name, datetime }) {
 
+  const [share, setShare] = useState("notShared")
+  let contentButtonClass = "";
+  let shareButton="";
+
+  const checkStatus = async () => {
+
+
+    const readInitialSampleToLocation = await fetch("http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=read&endpoint=samples_to_locations", {
+      method: "GET",
+    })
+    const sampleToLocation = await readInitialSampleToLocation.json()
+    if (!sampleToLocation.samples_to_locations) {
+      
+    }
+    else {
+      const sampleLocation = sampleToLocation.samples_to_locations
+      const filteredSampleLocation = sampleLocation.filter((x) => x.samples_id === id)
+      if (filteredSampleLocation.length !== 0) {
+        setShare("shared")
+      }
+    }
+  }
+
+  if (share ==="notShared"){
+    contentButtonClass= "content-button"
+    shareButton = "Share"
+  }
+  else if (share ==="shared"){
+    contentButtonClass= "content-button3";
+    shareButton = "Shared";
+  }
+
+  useEffect(() => {
+    checkStatus()
+  })
+  
   const timeFormat = new Date(datetime)
   const newtime = timeFormat.toLocaleString('en-AU', { hour: 'numeric', minute: 'numeric', hour12: true });
   const newdate = timeFormat.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -20,7 +56,7 @@ function Sample({ id, name, datetime }) {
             <time>{newTimeFormat}</time>
           </section>
           <nav>
-            <Link to={`/Share/${id}`}><button className="content-button">Share</button></Link>
+            <Link to={`/Share/${id}`}><button className={contentButtonClass}>{shareButton}</button></Link>
             <button className="content-button">Preview</button>
             <Link to={`/Edit/${id}`}><button className="content-button2">Edit</button></Link>
           </nav>

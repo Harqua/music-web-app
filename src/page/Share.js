@@ -100,6 +100,8 @@ function Location({ location, sampleData }) {
 function ShareStatus({ location, sampleData }) {
   const [share, setShare] = useState("notShared")
 
+  console.log(location)
+  console.log(sampleData)
   const checkStatus = async () => {
     const readInitialSampleToLocation = await fetch("http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=read&endpoint=samples_to_locations", {
       method: "GET",
