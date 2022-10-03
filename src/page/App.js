@@ -21,16 +21,17 @@ function Sample({ id, name, datetime, recording_data, type }) {
       method: "GET",
     })
     const sampleToLocation = await readInitialSampleToLocation.json()
-    if (!sampleToLocation.samples_to_locations) {
-
-    }
-    else {
+    if (sampleToLocation.samples_to_locations) {
       const sampleLocation = sampleToLocation.samples_to_locations
       const filteredSampleLocation = sampleLocation.filter((x) => x.samples_id === id)
       if (filteredSampleLocation.length !== 0) {
         setShare("shared")
       }
+      else {
+        setShare("notShared")
+      }
     }
+
   }
 
   if (share === "notShared") {
@@ -44,11 +45,9 @@ function Sample({ id, name, datetime, recording_data, type }) {
 
 
   async function Notes(note) {
-    let parseSampleNotes = "";
-    if (recording_data){
-      parseSampleNotes = (typeof recording_data === 'string') ? JSON.parse(recording_data) : [recording_data]
-    }
-    console.log(parseSampleNotes)
+    
+
+    const parseSampleNotes = (typeof recording_data === 'string') ? JSON.parse(recording_data) : recording_data.recording_data
     const findNotesIndex = parseSampleNotes.findIndex(sampleNote => {
       const include = Object.keys(sampleNote)
       return include.includes(note)
@@ -71,16 +70,14 @@ function Sample({ id, name, datetime, recording_data, type }) {
       _setSequence(newSeq)
       findNotes[note] = newSeq.map((x) => x.barEnabled)
     }
+
     useEffect(() => {
 
-      // toneParts.forEach(tonePart => tonePart.clear());
-      // toneTransport.cancel();
-      // console.log(findNotes)
+
       const sequenceFilter = sequence.filter(bar => findNotes[note][bar.barID - 1])
 
       sequenceFilter.forEach(bar => {
-        // toneParts.forEach(tonePart => {
-        //   tonePart.add((bar.barID - 1) / 4, `${note}3`)}); 
+
 
         if (type === "piano") {
           pianoTonePart.add((bar.barID - 1) / 4, `${note}3`);
@@ -225,9 +222,4 @@ function CreateSample({ addSample }) {
       <button onClick={handleClick} className="content-button2">Create Sample</button>
     </div>
   )
-}
-
-function Notes({ note, type, recording_data, setPreviewing, previewing }) {
-
-
 }

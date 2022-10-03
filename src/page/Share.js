@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 // import { initialSample } from "../data/sample";
 import Template from "../components/Template";
+import { toneObject, toneTransport, guitarTonePart, pianoTonePart, frenchHornTonePart, drumTonePart } from "../data/instruments.js";
 
 // const uqLocations = ["Great Court, UQ", "General Purpose South, UQ", "Near UQ Lakes Bus Station, UQ", "UQU Shops, UQ", "UQ Sport Courts, UQ"]
 
@@ -43,11 +44,89 @@ export default function Share() {
     setLocations(uqLocations)
 
   }
+
   useEffect(() => {
     init()
-
-
   }, [])
+
+  async function Notes(note) {
+    
+
+    const parseSampleNotes = (typeof sampleNotes === 'string') ? JSON.parse(sampleNotes) : sampleNotes
+
+    const findNotesIndex = parseSampleNotes.findIndex(sampleNote => {
+      const include = Object.keys(sampleNote)
+      return include.includes(note)
+    })
+
+
+    const findNotes = parseSampleNotes[findNotesIndex]
+    const notesArray = findNotes[note]
+
+    
+
+    let initialSequence = [];
+    for (let bar = 1; bar <= 16; bar++) {
+      initialSequence.push({
+        barID: bar,
+        barEnabled: notesArray[bar - 1],
+      });
+    }
+
+    // const [sequence, _setSequence] = useState(initialSequence);
+    // const setSequence = (newSeq) => {
+    //   _setSequence(newSeq)
+    //   findNotes[note] = newSeq.map((x) => x.barEnabled)
+    // }
+
+    // useEffect(() => {
+
+
+    //   const sequenceFilter = sequence.filter(bar => findNotes[note][bar.barID - 1])
+
+    //   sequenceFilter.forEach(bar => {
+
+
+    //     if (instrument === "piano") {
+    //       pianoTonePart.add((bar.barID - 1) / 4, `${note}3`);
+    //     }
+    //     else if (instrument === "french_horn") {
+    //       frenchHornTonePart.add((bar.barID - 1) / 4, `${note}3`);
+    //     }
+    //     else if (instrument === "guitar") {
+    //       guitarTonePart.add((bar.barID - 1) / 4, `${note}3`);
+    //     }
+    //     else if (instrument === "drums") {
+    //       drumTonePart.add((bar.barID - 1) / 4, `${note}3`);
+    //     }
+    //   });
+
+    //   toneTransport.schedule(time => {
+    //     setPreviewing(false);
+    //   }, 16 / 4);
+
+    // });
+  }
+
+  const handleClickPreview = (event) => {
+    toneObject.start()
+    toneTransport.stop()
+    toneTransport.cancel();
+    if (previewing) {
+      setPreviewing(false);
+    }
+    else {
+      setPreviewing(true);
+      toneTransport.start();
+    }
+  }
+
+  let notes = ["B", "A", "G", "F", "E", "D", "C"]
+  let eachNote = notes.map((note) => {
+    Notes(note)
+  })
+ 
+
 
   if (!location) {
     return <p>Please Wait...</p>
@@ -68,7 +147,8 @@ export default function Share() {
           <time>{newTimeFormat}</time>
         </section>
         <nav>
-          <button className="content-button">Preview</button>
+          {/* <button className="content-button">Preview</button> */}
+          <Preview handleClickPreview={handleClickPreview} previewing={previewing} />
         </nav>
       </div>
       <div id="locationList">
@@ -97,11 +177,14 @@ function Location({ location, sampleData }) {
   )
 }
 
+function Preview({ handleClickPreview, previewing }) {
+  return <button onClick={handleClickPreview} className="content-button">{previewing ? "Stop Previewing" : "Preview"}</button>
+
+}
+
 function ShareStatus({ location, sampleData }) {
   const [share, setShare] = useState("notShared")
 
-  console.log(location)
-  console.log(sampleData)
   const checkStatus = async () => {
     const readInitialSampleToLocation = await fetch("http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=read&endpoint=samples_to_locations", {
       method: "GET",
@@ -149,9 +232,7 @@ function ShareStatus({ location, sampleData }) {
 
   }
 
-  // console.log(share)
-  // console.log(location.id)
-  // console.log(sampleData.id)
+
   return (
     <tr>
       <th className={`share-button ${share === "notShared" && `active`}`} onClick={() => handleClickUnshare(location.id, sampleData.id)}>Not Shared</th>
