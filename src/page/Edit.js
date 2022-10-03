@@ -20,7 +20,7 @@ export default function Edit() {
   const [instrument, setInstrument] = useState()
   const [sampleNotes, setSampleNotes] = useState()
   
-  const x = async () => {
+  const init = async () => {
     const readInitialSampleResponse = await fetch("http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=read&endpoint=samples", {
       method: "GET",
     })
@@ -38,7 +38,7 @@ export default function Edit() {
 
   useEffect(() => {
 
-    x()
+    init()
   }, [])
 
   if (!editSample){
@@ -81,7 +81,6 @@ export default function Edit() {
 
     // initialSample[editSample.id - 1] = { ...editSample, datetime: `${dateTime}`, type: instrument, recording_data: sampleNotes }
     const parseRecordingData = (typeof sampleNotes === 'string') ? JSON.parse(sampleNotes) : sampleNotes
-    console.log(parseRecordingData)
     const createSampleResponse = await fetch(`http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=update&endpoint=samples&sampleType=${instrument}&sampleName=${editSample.name}&id=${editSample.id}`, {
       method: "POST",
       body: JSON.stringify(parseRecordingData),
