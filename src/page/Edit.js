@@ -5,7 +5,6 @@ import { guitar, piano, frenchHorn, drum } from "../data/instruments.js";
 import { toneObject, toneTransport, guitarTonePart, pianoTonePart, frenchHornTonePart, drumTonePart } from "../data/instruments.js";
 
 
-let toneParts = [guitarTonePart, pianoTonePart, frenchHornTonePart, drumTonePart];
 
 export default function Edit() {
 
@@ -81,9 +80,11 @@ export default function Edit() {
     event.preventDefault();
 
     // initialSample[editSample.id - 1] = { ...editSample, datetime: `${dateTime}`, type: instrument, recording_data: sampleNotes }
+    const parseRecordingData = (typeof sampleNotes === 'string') ? JSON.parse(sampleNotes) : sampleNotes
+    console.log(parseRecordingData)
     const createSampleResponse = await fetch(`http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=update&endpoint=samples&sampleType=${instrument}&sampleName=${editSample.name}&id=${editSample.id}`, {
       method: "POST",
-      body: JSON.stringify(sampleNotes),
+      body: JSON.stringify(parseRecordingData),
     });
 
   }
@@ -190,7 +191,6 @@ function Bars({ sequence, setSequence, note, instrument }) {
     setSequence([...sequence].map((b) => {
       return b.barID === bar.barID ? bar : b;
     }))
-    console.log(sequence)
     // console.log([...sequence].map((b) => {
     //   return b.barID === bar.barID ? bar : b;
     // }))

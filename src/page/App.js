@@ -47,8 +47,9 @@ export default function App() {
 
   const addSample = async () => {
     const datetime = new Date();
-    const time = `${datetime.getHours()}:${datetime.getMinutes}:00`
+    const time = `${datetime.getHours()}:${datetime.getMinutes()}:00`
     const date = `${datetime.getFullYear()}-${datetime.getMonth()}-${datetime.getDate()}`
+    console.log(date, time)
     const recording_data = [
       { "B": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
       { "A": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
@@ -91,7 +92,6 @@ function CreateSample({ addSample }) {
   const handleClick = async (event) => {
     event.preventDefault();
      await addSample()
-     console.log("add succ")
     // const createSampleResponse = await fetch("http://wmp.interaction.courses/api/v1/?apiKey=S6g0c0vp&mode=create&endpoint=samples&sampleType=piano&sampleName=NewSample", {
     //   method: "POST",
     //   body: JSON.stringify(recording_data),
