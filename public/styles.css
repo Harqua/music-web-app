@@ -140,19 +140,22 @@ main li {
 
 .content-button {
 
-	color: var(--headerTextColor);
+	color: var(--fgColor);
 	background-color: var(--bgColor);
+	border-color: var(--fgColor)
 
 }
 
 .content-button:hover {
 	background-color: var(--purpleColorLighter);
 	border-color: var(--purpleColorLighter);
+	color: var(--headerTextColor)
 }
 
 .content-button2 {
 	color: var(--bgColor);
-	background-color: var(--headerTextColor);
+	background-color: var(--fgColor);
+	border-color: var(--fgColor)
 }
 
 .content-button2:hover {
@@ -228,13 +231,13 @@ time {
 }
 
 .music-button {
-	color: var(--headerTextColor);
+	color: var(--fgColor);
 	background-color: var(--bgColor);
 }
 
 .active {
 	color: var(--bgColor);
-	background-color: var(--headerTextColor);
+	background-color: var(--fgColor);
 	pointer-events: none;
 }
 
@@ -299,7 +302,7 @@ th {
 }
 
 .sequencer>.bar.selected {
-	background: var(--headerTextColor);
+	background: var(--fgColor);
 }
 
 
