@@ -40,8 +40,8 @@ export default function Share() {
     })
     const readLocation = await readInitialLocationResponse.json()
     const allLocations = [...readLocation.locations]
-    const uqLocations = allLocations.filter(uq => uq.location.includes("UQ"))
-    setLocations(uqLocations)
+    // const uqLocations = allLocations.filter(uq => uq.location.includes("UQ"))
+    setLocations(allLocations)
 
   }
 

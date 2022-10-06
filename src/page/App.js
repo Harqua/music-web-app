@@ -173,7 +173,7 @@ export default function App() {
     const time = `${datetime.getHours()}:${datetime.getMinutes()}:00`
     const date = `${datetime.getFullYear()}-${datetime.getMonth()}-${datetime.getDate()}`
     const recording_data = [
-      { "B": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
+      { "B": [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
       { "A": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
       { "G": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
       { "F": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] },
